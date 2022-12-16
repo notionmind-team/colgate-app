@@ -1,5 +1,6 @@
 ROLE_SUPER_ADMIN = "superadmin"
-ROLE_SITE_ADMIN = "site_admin"
-ROLE_TECHNICIAN = 'Technician'
+ROLE_USER = "user"
 
+
+SERVER_ERROR = "Sorry, please try again after some time."
 

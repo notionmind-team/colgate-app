@@ -98,3 +98,17 @@ class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("first_name","last_name","email","role","mobile","company","designation")
+
+
+class SourceDetailsSerializer(serializers.ModelSerializer):
+    source_id = serializers.SerializerMethodField(read_only=True)
+
+    def get_source_id(self,ins):
+        if ins is None:
+            return ""
+
+        return str(ins.id)
+
+    class Meta:
+        model = SourceDetails
+        fields=("source_id","name","discription","image_url")

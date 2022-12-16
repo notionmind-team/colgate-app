@@ -41,7 +41,7 @@ class UserManager(BaseUserManager):
 #User Role
 class Role(models.Model):
     token           = models.UUIDField(default= uuid.uuid4, unique=True)
-    role_type       = models.CharField(max_length=20,choices=(('superadmin','superadmin'),('site_admin','site_admin'),('Technician','Technician'),('applicator','applicator'),('validator','validator')),default='site_admin')
+    role_type       = models.CharField(max_length=20,choices=(('superadmin','superadmin'),('user','user')),default='user')
     name            = models.CharField(max_length=255, unique=True)
     desc            = models.CharField(max_length=255,null=True,blank=True)
     publish         = models.BooleanField(default = True)
@@ -117,3 +117,22 @@ class APIAuthKey(models.Model):
     class Meta:
         verbose_name = "API Auth Key"
         verbose_name_plural = "API Auth Keys"
+
+
+class SourceDetails(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    discription = models.TextField(null=True, blank=True)
+    image_url = models.CharField(max_length=255, null=True, blank=True)
+    is_active = models.BooleanField(default = True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    createdBy = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+
+    def __int__(self):
+        return self.id
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Source"
+        verbose_name_plural = "Source"
