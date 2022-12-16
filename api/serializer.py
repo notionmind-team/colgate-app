@@ -112,3 +112,31 @@ class SourceDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SourceDetails
         fields=("source_id","name","discription","image_url")
+
+
+class SourceServerDetailsSerializer(serializers.ModelSerializer):
+    server_id = serializers.SerializerMethodField(read_only=True)
+    source_id = serializers.SerializerMethodField(read_only=True)
+    source_name = serializers.SerializerMethodField(read_only=True)
+
+    def get_server_id(self,ins):
+        if ins is None:
+            return ""
+
+        return str(ins.id)
+
+    def get_source_id(self,ins):
+        if ins is None:
+            return ""
+        
+        return str(ins.source.id)
+    
+    def get_source_name(self,ins):
+        if ins is None:
+            return ""
+        
+        return str(ins.source.name)
+
+    class Meta:
+        model = SourceServer
+        fields=("server_id","servername","serverhost","serverport","username","source_id","source_name")

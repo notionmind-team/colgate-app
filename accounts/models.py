@@ -136,3 +136,25 @@ class SourceDetails(models.Model):
     class Meta:
         verbose_name = "Source"
         verbose_name_plural = "Source"
+
+
+class SourceServer(models.Model):
+    servername = models.CharField(max_length=255, null=True, blank=True)
+    serverhost = models.CharField(max_length=255, null=True, blank=True)
+    serverport = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255, null=True, blank=True)
+    password = models.CharField(max_length=255, null=True, blank=True)
+    source = models.ForeignKey(SourceDetails, on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default = True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    createdBy = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+
+    def __int__(self):
+        return self.id
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "SourceServer"
+        verbose_name_plural = "SourceServer"
