@@ -1,0 +1,692 @@
+{
+	"info": {
+		"_postman_id": "f2318f2c-7ff0-41e2-a0d3-a3f218537d15",
+		"name": "Colgate localhost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12752510"
+	},
+	"item": [
+		{
+			"name": "Superadmin",
+			"item": [
+				{
+					"name": "Source",
+					"item": [
+						{
+							"name": "Source Create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "source_name",
+											"value": "POWER BI",
+											"type": "text"
+										},
+										{
+											"key": "source_description",
+											"value": "Power BI is an interactive data visualization software product developed by Microsoft with a primary focus on business intelligence. It is part of the Microsoft Power Platform.",
+											"type": "text"
+										},
+										{
+											"key": "source_image",
+											"value": "https://i.picsum.photos/id/469/536/354.jpg?hmac=z6P6J9A9nuzmShWYw7TLnOX-gpVgyzHVuSAjZrDahj8",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-create",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Source update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "source_name",
+											"value": "SIGMA",
+											"type": "text"
+										},
+										{
+											"key": "source_description",
+											"value": "Sigma is the only BI analytics tool purpose-built for your cloud data warehouse. Uniquely scalable, with an experience you already know: the spreadsheet.",
+											"type": "text"
+										},
+										{
+											"key": "source_image",
+											"value": "https://i.picsum.photos/id/469/536/354.jpg?hmac=z6P6J9A9nuzmShWYw7TLnOX-gpVgyzHVuSAjZrDahj8",
+											"type": "text"
+										},
+										{
+											"key": "source_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-update",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Source Listing",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-listing",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-listing"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Server",
+					"item": [
+						{
+							"name": "server create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "source_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "server_name",
+											"value": "B server",
+											"type": "text"
+										},
+										{
+											"key": "server_port",
+											"value": "8003",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "abc",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "abc",
+											"type": "text"
+										},
+										{
+											"key": "server_host",
+											"value": "192.168.1.3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-server-create",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-server-create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "server update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "server_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "source_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "server_name",
+											"value": "B2 server",
+											"type": "text"
+										},
+										{
+											"key": "server_port",
+											"value": "8003",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "abc",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "abc",
+											"type": "text"
+										},
+										{
+											"key": "server_host",
+											"value": "192.168.1.3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-server-update",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-server-update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "server listing",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "source_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-server-listing",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-server-listing"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "server details",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "server_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-server-details",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-server-details"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "server deleted",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "APIKEY",
+										"value": "{{api_key}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token_superadmin}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "server_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/api/source-server-delete",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"api",
+										"source-server-delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "{{username_superadmin}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://122.169.107.192:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"122",
+						"169",
+						"107",
+						"192"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token 9f5e50a2e902972e9d79d3841ea76cbd1015c31d"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/api/logout",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forget Password Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "jaiminparmar99999@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "source",
+							"value": "IOS",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/forgot-password-request",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"forgot-password-request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forget Password Reset",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "otp",
+							"value": "1732",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Abc1234@",
+							"type": "text"
+						},
+						{
+							"key": "password_confirm",
+							"value": "Abc1234@",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "jaiminparmar99999@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/forgot-password-reset",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"forgot-password-reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token_siteadmin}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "old_pass",
+							"value": "Abc1234@",
+							"type": "text"
+						},
+						{
+							"key": "new_pass",
+							"value": "Abc1234@",
+							"type": "text"
+						},
+						{
+							"key": "confirm_pass",
+							"value": "Abc1234@",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/change-password",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Countries",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token_superadmin}}"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/api/country",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"country"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "States",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token_superadmin}}"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/api/state?country_id=2",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"state"
+					],
+					"query": [
+						{
+							"key": "country_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "City",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "APIKEY",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token_superadmin}}"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/api/city?state_id=13",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"city"
+					],
+					"query": [
+						{
+							"key": "state_id",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
