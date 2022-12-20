@@ -17,4 +17,7 @@ urlpatterns = [
     path('source-server-details',superadmin_views.source_server_details,name='source_server_details'),
     path('source-server-update',superadmin_views.source_server_update,name='source_server_update'),
     path('source-server-delete',superadmin_views.source_server_delete,name='source_server_delete'),
+    path('user-create',superadmin_views.user_create,name='user_create'),
+    path('user-listing',superadmin_views.user_listing,name='user_listing'),
+    path('user-update',superadmin_views.user_update,name='user_update'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

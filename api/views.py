@@ -58,7 +58,7 @@ def login(request):
             return Response(data={"status":"Error","message":"Invalid email or password."}, status=HTTP_200_OK)
         
         if user.isDeleted:
-            return Response(data={"status":"Error","message":"This account is not active. Please contact the admin at help@suretytech.ca"}, status=HTTP_200_OK)
+            return Response(data={"status":"Error","message":"This account is not active. Please contact the admin"}, status=HTTP_200_OK)
 
         token, created = Token.objects.get_or_create(user=user)
         if not created:

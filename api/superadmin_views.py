@@ -369,3 +369,125 @@ def source_server_delete(request):
     else:
         errormsg = "Bad Request"
         return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def user_create(request):
+    if request.user.is_anonymous:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+    
+    if request.user.role.role_type == ROLE_SUPER_ADMIN:
+        try:
+            refresh_token(request.user)
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            role_type = request.POST.get("role_type")
+            
+            if first_name.strip() == "":
+                errormsg = "The first name can not be empty."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+            
+            if last_name.strip() == "":
+                errormsg = "The last name can not be empty."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+
+            if email.strip() == "":
+                errormsg = "The email can not be empty."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+
+            if password.strip() == "":
+                errormsg = "The email can not be empty."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+
+            email = email.lower()
+
+            userfound = User.objects.filter(email=email).first()
+            if userfound:
+                errormsg = "Email is already used."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+                
+            role = ""
+            role_type = role_type.upper()
+
+            if role_type == "ADMIN" or role_type == ROLE_SUPER_ADMIN:
+                role = Role.objects.filter(role_type=ROLE_SUPER_ADMIN).first()
+            elif role_type == "USER":
+                role = Role.objects.filter(role_type=ROLE_USER).first()
+            else:
+                errormsg = "role does not match."
+                return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+
+            user = User.objects.create(
+                role = role,
+                first_name = first_name,
+                last_name = last_name,
+                email = email,
+                mobile = '', 
+                designation = '',
+                company = '',
+                isDeleted = False,
+                isTermAccepted = False,
+                isEulaAccepted=False,
+                isProfileComplete = True,
+                source = 'Web'
+            )
+
+            user.set_password(password)
+            user.save()
+        
+            return Response(data={"status":"Success","message":"user created sucessfully."}, status=HTTP_200_OK)
+        except Exception as e:
+            SaveLog(e)
+            return Response(data={"status":"Error","message":SERVER_ERROR}, status=HTTP_200_OK)
+    else:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def user_listing(request):
+    
+    role = Role.objects.filter(role_type=ROLE_USER).first()
+    user_list = User.objects.filter(role=role).order_by("first_name")
+
+    res_list = []
+    for user in user_list:
+        data = {}
+        data["id"] = ValueCheck(user.id)
+        data["name"] = ValueCheck(user.first_name) + " " + ValueCheck(user.last_name)
+        data["email"] = ValueCheck(user.email)
+        data["role"] = ValueCheck(user.role)
+        if user.isDeleted:
+            data["is_active"] = False
+        else:
+            data["is_active"] = True
+
+        res_list.append(data)
+
+    if len(res_list) == 0:
+        return Response(data={"status":"Error","message":"User record not found."}, status=HTTP_200_OK)
+
+    return Response(data={"status":"Success","message":"All user list get successfully.","data":res_list}, status=HTTP_200_OK)
+
+@api_view(["POST"])
+def user_update(request):
+    user_id = request.POST.get("user_id")
+    active = checkTrueOrFalse(request.POST.get("is_active"))
+    
+    if user_id == "":
+        errormsg = "User id can not be empty."
+        return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+
+    role = Role.objects.filter(role_type=ROLE_USER).first()
+    user = User.objects.filter(id=user_id,role=role).first()
+    if user is None:
+        return Response({"status":"Error","message":"Unable to find user data."},status=HTTP_200_OK)
+    
+    if active:
+        user.isDeleted = False
+    else:
+        user.isDeleted = True
+    user.save()
+
+    return Response(data={"status":"Success","message":"user updated successfully."}, status=HTTP_200_OK)
