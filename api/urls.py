@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import superadmin_views
+from . import user_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
@@ -21,4 +22,10 @@ urlpatterns = [
     path('user-listing',superadmin_views.user_listing,name='user_listing'),
     path('user-update',superadmin_views.user_update,name='user_update'),
     path('dashboard-listing',superadmin_views.dashboard_listing,name='dashboard_listing'),
+
+
+    path('user-dashboard-create',user_views.user_dashboard_create,name='dashboard_listing'),
+    path('user-dashboard-listing',user_views.user_dashboard_listing,name='user_dashboard_listing'),
+    path('user-dashboard-delete',user_views.user_dashboard_delete,name='user_dashboard_delete'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

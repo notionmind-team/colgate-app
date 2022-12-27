@@ -45,9 +45,9 @@ def source_create(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
           
-            source_name = request.POST.get('source_name')
-            source_description = request.POST.get("source_description")
-            source_image = request.POST.get("source_image")
+            source_name = request.data.get('source_name')
+            source_description = request.data.get("source_description")
+            source_image = request.data.get("source_image")
   
             if source_name == "":
                 return Response({"status":"Error","message":"Source name can not empty."},status=HTTP_200_OK)
@@ -112,10 +112,10 @@ def source_update(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
           
-            source_id = request.POST.get('source_id')    
-            source_name = request.POST.get('source_name')
-            source_description = request.POST.get("source_description")
-            source_image = request.POST.get("source_image")
+            source_id = request.data.get('source_id')    
+            source_name = request.data.get('source_name')
+            source_description = request.data.get("source_description")
+            source_image = request.data.get("source_image")
 
             if source_id == "":
                 return Response({"status":"Error","message":"Source id can not empty."},status=HTTP_200_OK)
@@ -164,12 +164,12 @@ def source_server_create(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
           
-            source_id = request.POST.get('source_id')
-            server_name = request.POST.get('server_name')
-            server_host = request.POST.get('server_host')
-            server_port = request.POST.get("server_port")
-            username = request.POST.get("username")
-            password = request.POST.get("password")
+            source_id = request.data.get('source_id')
+            server_name = request.data.get('server_name')
+            server_host = request.data.get('server_host')
+            server_port = request.data.get("server_port")
+            username = request.data.get("username")
+            password = request.data.get("password")
   
             if source_id == "":
                 return Response({"status":"Error","message":"source id can not empty."},status=HTTP_200_OK)
@@ -225,7 +225,7 @@ def source_server_listing(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
             
-            source_id = request.POST.get('source_id')    
+            source_id = request.data.get('source_id')    
             if source_id == "":
                 return Response({"status":"Error","message":"Source id can not empty."},status=HTTP_200_OK)
             
@@ -257,7 +257,7 @@ def source_server_details(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
             
-            server_id = request.POST.get('server_id')    
+            server_id = request.data.get('server_id')    
             if server_id == "":
                 return Response({"status":"Error","message":"server id can not empty."},status=HTTP_200_OK)
             
@@ -287,13 +287,13 @@ def source_server_update(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
           
-            source_id = request.POST.get('source_id')
-            server_id = request.POST.get('server_id')
-            server_name = request.POST.get('server_name')
-            server_host = request.POST.get('server_host')
-            server_port = request.POST.get("server_port")
-            username = request.POST.get("username")
-            password = request.POST.get("password")
+            source_id = request.data.get('source_id')
+            server_id = request.data.get('server_id')
+            server_name = request.data.get('server_name')
+            server_host = request.data.get('server_host')
+            server_port = request.data.get("server_port")
+            username = request.data.get("username")
+            password = request.data.get("password")
   
             if source_id == "":
                 return Response({"status":"Error","message":"source id can not empty."},status=HTTP_200_OK)
@@ -352,7 +352,7 @@ def source_server_delete(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
             
-            server_id = request.POST.get('server_id')    
+            server_id = request.data.get('server_id')    
             if server_id == "":
                 return Response({"status":"Error","message":"server id can not empty."},status=HTTP_200_OK)
             
@@ -380,11 +380,11 @@ def user_create(request):
     if request.user.role.role_type == ROLE_SUPER_ADMIN:
         try:
             refresh_token(request.user)
-            first_name = request.POST.get("first_name")
-            last_name = request.POST.get("last_name")
-            email = request.POST.get("email")
-            password = request.POST.get("password")
-            role_type = request.POST.get("role_type")
+            first_name = request.data.get("first_name")
+            last_name = request.data.get("last_name")
+            email = request.data.get("email")
+            password = request.data.get("password")
+            role_type = request.data.get("role_type")
             
             if first_name.strip() == "":
                 errormsg = "The first name can not be empty."
@@ -472,8 +472,8 @@ def user_listing(request):
 
 @api_view(["POST"])
 def user_update(request):
-    user_id = request.POST.get("user_id")
-    active = checkTrueOrFalse(request.POST.get("is_active"))
+    user_id = request.data.get("user_id")
+    active = checkTrueOrFalse(request.data.get("is_active"))
     
     if user_id == "":
         errormsg = "User id can not be empty."
@@ -495,7 +495,7 @@ def user_update(request):
 
 @api_view(["POST"])
 def dashboard_listing(request):
-    source_name = request.POST.get("source_name")
+    source_name = request.data.get("source_name")
     if source_name == "":
         errormsg = "Source name can not be empty."
         return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)

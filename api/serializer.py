@@ -140,3 +140,17 @@ class SourceServerDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SourceServer
         fields=("server_id","servername","serverhost","serverport","username","source_id","source_name")
+
+
+class UserDashboardDetailsSerializer(serializers.ModelSerializer):
+    dashboard_id = serializers.SerializerMethodField(read_only=True)
+
+    def get_dashboard_id(self,ins):
+        if ins is None:
+            return ""
+
+        return str(ins.id)
+
+    class Meta:
+        model = UserDashboardDetails
+        fields=("dashboard_id","name","image_url")

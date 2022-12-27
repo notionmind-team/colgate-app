@@ -159,7 +159,7 @@ class SourceServer(models.Model):
         verbose_name = "SourceServer"
         verbose_name_plural = "SourceServer"
 
-
+###admin specific
 class DashboardDetails(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     link = models.CharField(max_length=255, null=True, blank=True)
@@ -178,3 +178,21 @@ class DashboardDetails(models.Model):
     class Meta:
         verbose_name = "DashboardDetails"
         verbose_name_plural = "DashboardDetails"
+
+
+class UserDashboardDetails(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True,default="")
+    image_url = models.CharField(max_length=255, null=True, blank=True,default="")
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default = True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+
+    def __int__(self):
+        return self.id
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "UserDashboardDetails"
+        verbose_name_plural = "UserDashboardDetails"
