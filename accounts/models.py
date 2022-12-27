@@ -122,7 +122,7 @@ class APIAuthKey(models.Model):
 class SourceDetails(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     discription = models.TextField(null=True, blank=True)
-    image_url = models.CharField(max_length=255, null=True, blank=True)
+    image_url = models.TextField(null=True, blank=True)
     base_url =  models.CharField(max_length=255, null=True, blank=True,default="")
     is_active = models.BooleanField(default = True)
     createdAt = models.DateTimeField(auto_now_add=True)
@@ -183,7 +183,7 @@ class DashboardDetails(models.Model):
 
 class UserDashboardDetails(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True,default="")
-    image_url = models.CharField(max_length=255, null=True, blank=True,default="")
+    image_url = models.TextField(null=True, blank=True,default="")
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True, blank=True)
     is_active = models.BooleanField(default = True)
     createdAt = models.DateTimeField(auto_now_add=True)
