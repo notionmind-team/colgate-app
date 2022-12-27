@@ -445,13 +445,11 @@ def user_create(request):
             if userfound:
                 errormsg = "Email is already used."
                 return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
-                
+            
             role = ""
-            role_type = role_type.upper()
-
-            if role_type == "ADMIN" or role_type == ROLE_SUPER_ADMIN:
+            if role_type == "superadmin" or role_type == ROLE_SUPER_ADMIN:
                 role = Role.objects.filter(role_type=ROLE_SUPER_ADMIN).first()
-            elif role_type == "USER":
+            elif role_type == "USER" or role_type == ROLE_USER:
                 role = Role.objects.filter(role_type=ROLE_USER).first()
             else:
                 errormsg = "role does not match."
