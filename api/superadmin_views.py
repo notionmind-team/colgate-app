@@ -447,9 +447,9 @@ def user_create(request):
                 return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
             
             role = ""
-            if role_type == "superadmin" or role_type == ROLE_SUPER_ADMIN:
+            if role_type == ROLE_SUPER_ADMIN:
                 role = Role.objects.filter(role_type=ROLE_SUPER_ADMIN).first()
-            elif role_type == "USER" or role_type == ROLE_USER:
+            elif role_type == ROLE_USER:
                 role = Role.objects.filter(role_type=ROLE_USER).first()
             else:
                 errormsg = "role does not match."
