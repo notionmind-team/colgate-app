@@ -541,13 +541,18 @@ def dashboard_listing(request):
     response_data = []
     
     if source_uppercase == "DOMO":
+        base_url = DOMO_BASE_URL
+        source_detail = SourceDetails.objects.filter(name=source_name).first()
+        if source_detail and source_detail.base_url != "":
+            base_url = source_detail.base_url
+
         dashboard_list = GetDomoDashboardList()
         for dashboard_res in dashboard_list:
-
+            link = base_url + "/page/"+str(dashboard_res["id"])
             dashboard_obj = DashboardDetails.objects.filter(dashboard_id=str(dashboard_res["id"])).first()
             if dashboard_obj:
                 dashboard_obj.name = dashboard_res["name"]
-                dashboard_obj.link = ""
+                dashboard_obj.link = link
                 dashboard_obj.dashboard_id = str(dashboard_res["id"])
                 dashboard_obj.source_type = "DOMO"
                 dashboard_obj.createdBy = request.user
@@ -555,7 +560,7 @@ def dashboard_listing(request):
             else:
                 dashboard_obj = DashboardDetails.objects.create(
                     name=dashboard_res["name"],
-                    link="",
+                    link=link,
                     source_type = "DOMO",
                     dashboard_id=str(dashboard_res["id"]),
                     createdBy = request.user,
