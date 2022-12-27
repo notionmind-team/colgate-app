@@ -46,20 +46,48 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'accounts',
+    'corsheaders',
     'api',
-    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'tracking.middleware.VisitorTrackingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+'APIKEY',
+'Authorization',
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'colgate_app.urls'
 
@@ -90,8 +118,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'colage_local_testing',
         'USER': 'postgres',
-        'PASSWORD': '1312',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'root9825',
+        'HOST': '122.169.107.192',
         'PORT': '5432',
     }
 }
@@ -186,3 +214,5 @@ TOKEN_EXPIRE_PERIOD = datetime.timedelta(minutes=10080) #positive integer value 
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DOMO_CLIENT_ID = '61a702aa-64b1-435f-bc86-b7eaf33b3c4d'
+DOMO_SECRET_ID = 'f05aa51b36db6ca4164456d0193474315342fbf3ab7a597b93ef84ac26843502'
