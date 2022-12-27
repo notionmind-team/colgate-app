@@ -103,9 +103,17 @@ def user_dashboard_details(request):
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
           
-            userdashboards = UserDashboardDetails.objects.filter(is_active=True,user=request.user)
-            return Response(data={"status":"Success","message":"dashboard list get sucessfully.","data":UserDashboardDetailsSerializer(userdashboards,many=True).data}, status=HTTP_200_OK)
+            dashboard_id = request.data.get('dashboard_id')
+            if dashboard_id == "":
+                errormsg = "dashboard_id can not be empty."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
 
+            userdashboard = UserDashboardDetails.objects.filter(id=dashboard_id).first()
+            if userdashboard:
+                return Response(data={"status":"Success","message":"dashboard detail get sucessfully.","data":UserDashboardDetailsSerializer(userdashboard).data}, status=HTTP_200_OK)
+            else:
+                errormsg = "Dashboard can not be found."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
         except Exception as e:
             SaveLog(e)
             return Response(data={"status":"Error","message":SERVER_ERROR}, status=HTTP_200_OK)
@@ -113,6 +121,47 @@ def user_dashboard_details(request):
         errormsg = "Bad Request"
         return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
 
+@api_view(["POST"])
+def user_dashboard_update(request):
+    if request.user.is_anonymous:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+    
+    if request.user.role.role_type == ROLE_USER:
+        try:
+            refresh_token(request.user)
+            user_filter = User.objects.filter(email=request.user.email,isDeleted=True).first()
+            if user_filter:
+                return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
+          
+            dashboard_id = request.data.get('dashboard_id')
+            dashboard_name = request.data.get('dashboard_name')
+            image_url = request.data.get("image_url")
+
+            if dashboard_id == "":
+                errormsg = "dashboard_id can not be empty."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
+
+            if dashboard_name == "":
+                return Response({"status":"Error","message":"dashboard name can not empty."},status=HTTP_200_OK)
+
+            userdashboard = UserDashboardDetails.objects.filter(id=dashboard_id,user=request.user).first()
+            if userdashboard:
+                userdashboard.name = dashboard_name
+                userdashboard.image_url = image_url
+                userdashboard.save()
+                
+                return Response(data={"status":"Success","message":"dashboard updated sucessfully.","data":UserDashboardDetailsSerializer(userdashboard).data}, status=HTTP_200_OK)
+            else:
+                errormsg = "Dashboard can not be found."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
+
+        except Exception as e:
+            SaveLog(e)
+            return Response(data={"status":"Error","message":SERVER_ERROR}, status=HTTP_200_OK)
+    else:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
 def user_dashboard_delete(request):
@@ -124,6 +173,11 @@ def user_dashboard_delete(request):
         try:
             refresh_token(request.user)
             dashboard_id = request.data.get("dashboard_id")
+            
+            if dashboard_id == "":
+                errormsg = "dashboard_id can not be empty."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
+
             user_filter = User.objects.filter(email=request.user.email,isDeleted=True).first()
             if user_filter:
                 return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)

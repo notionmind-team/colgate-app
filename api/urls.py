@@ -13,6 +13,7 @@ urlpatterns = [
     path('source-create',superadmin_views.source_create,name='source_create'),
     path('source-listing',superadmin_views.source_listing,name='source_listing'),
     path('source-update',superadmin_views.source_update,name='source_update'),
+    path('source-delete',superadmin_views.source_delete,name='source_delete'),
     path('source-server-create',superadmin_views.source_server_create,name='source_server_create'),
     path('source-server-listing',superadmin_views.source_server_listing,name='source_server_listing'),
     path('source-server-details',superadmin_views.source_server_details,name='source_server_details'),
@@ -26,6 +27,8 @@ urlpatterns = [
 
     path('user-dashboard-create',user_views.user_dashboard_create,name='dashboard_listing'),
     path('user-dashboard-listing',user_views.user_dashboard_listing,name='user_dashboard_listing'),
+    path('user-dashboard-details',user_views.user_dashboard_details,name='user_dashboard_details'),
+    path('user-dashboard-update',user_views.user_dashboard_update,name='user_dashboard_update'),
     path('user-dashboard-delete',user_views.user_dashboard_delete,name='user_dashboard_delete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

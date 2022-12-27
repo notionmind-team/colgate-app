@@ -148,6 +148,39 @@ def source_update(request):
         errormsg = "Bad Request"
         return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
 
+@api_view(["POST"])
+def source_delete(request):
+    if request.user.is_anonymous:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+    
+    if request.user.role.role_type == ROLE_SUPER_ADMIN:
+        try:
+            refresh_token(request.user)
+            user_filter = User.objects.filter(email=request.user.email,isDeleted=True).first()
+            if user_filter:
+                return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
+          
+            source_id = request.data.get('source_id')    
+
+            if source_id == "":
+                return Response({"status":"Error","message":"Source id can not empty."},status=HTTP_200_OK)
+  
+            source_detail = SourceDetails.objects.filter(id=source_id,is_active=True).first()
+            if source_detail is None:
+                return Response({"status":"Error","message":"Source not found."},status=HTTP_200_OK)
+
+            source_detail.is_active=False
+            source_detail.save()
+            
+            return Response(data={"status":"Success","message":"Source deleted sucessfully."}, status=HTTP_200_OK)
+
+        except Exception as e:
+            SaveLog(e)
+            return Response(data={"status":"Error","message":SERVER_ERROR}, status=HTTP_200_OK)
+    else:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
 
 ##### source server
 
