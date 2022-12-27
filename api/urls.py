@@ -20,4 +20,5 @@ urlpatterns = [
     path('user-create',superadmin_views.user_create,name='user_create'),
     path('user-listing',superadmin_views.user_listing,name='user_listing'),
     path('user-update',superadmin_views.user_update,name='user_update'),
+    path('dashboard-listing',superadmin_views.dashboard_listing,name='dashboard_listing'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

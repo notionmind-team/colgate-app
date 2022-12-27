@@ -28,6 +28,7 @@ from django_db_logger.models import StatusLog
 from django.http import HttpResponse
 from .constants import *
 from .helper import *
+from .domo import *
 import qrcode
 
 
@@ -447,7 +448,6 @@ def user_create(request):
 
 @api_view(["POST"])
 def user_listing(request):
-    
     role = Role.objects.filter(role_type=ROLE_USER).first()
     user_list = User.objects.filter(role=role).order_by("first_name")
 
@@ -491,3 +491,44 @@ def user_update(request):
     user.save()
 
     return Response(data={"status":"Success","message":"user updated successfully."}, status=HTTP_200_OK)
+
+
+@api_view(["POST"])
+def dashboard_listing(request):
+    source_name = request.POST.get("source_name")
+    if source_name == "":
+        errormsg = "Source name can not be empty."
+        return Response({"status":"Error","message":errormsg},status=HTTP_200_OK)
+    
+    source_uppercase = source_name.upper()
+    response_data = []
+    
+    if source_uppercase == "DOMO":
+        dashboard_list = GetDomoDashboardList()
+        for dashboard_res in dashboard_list:
+
+            dashboard_obj = DashboardDetails.objects.filter(dashboard_id=str(dashboard_res["id"])).first()
+            if dashboard_obj:
+                dashboard_obj.name = dashboard_res["name"]
+                dashboard_obj.link = ""
+                dashboard_obj.dashboard_id = str(dashboard_res["id"])
+                dashboard_obj.source_type = "DOMO"
+                dashboard_obj.createdBy = request.user
+                dashboard_obj.save()
+            else:
+                dashboard_obj = DashboardDetails.objects.create(
+                    name=dashboard_res["name"],
+                    link="",
+                    source_type = "DOMO",
+                    dashboard_id=str(dashboard_res["id"]),
+                    createdBy = request.user,
+                )
+
+            data = {}
+            data["name"] = dashboard_obj.name
+            data["link"] = dashboard_obj.link
+            data["dashboard_id"] = dashboard_obj.dashboard_id
+            data["source_type"] = dashboard_obj.source_type
+            response_data.append(data)
+
+    return Response(data={"status":"Success","message":"dashboard list.", "data":response_data}, status=HTTP_200_OK)
