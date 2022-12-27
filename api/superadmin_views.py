@@ -48,6 +48,7 @@ def source_create(request):
             source_name = request.data.get('source_name')
             source_description = request.data.get("source_description")
             source_image = request.data.get("source_image")
+            base_url = request.data.get('base_url')
   
             if source_name == "":
                 return Response({"status":"Error","message":"Source name can not empty."},status=HTTP_200_OK)
@@ -62,6 +63,7 @@ def source_create(request):
                 name=source_name,
                 discription=source_description,
                 image_url=source_image,
+                base_url=base_url,
             )
           
             return Response(data={"status":"Success","message":"Source created sucessfully.","data":SourceDetailsSerializer(source_details).data}, status=HTTP_200_OK)
@@ -116,6 +118,7 @@ def source_update(request):
             source_name = request.data.get('source_name')
             source_description = request.data.get("source_description")
             source_image = request.data.get("source_image")
+            base_url = request.data.get('base_url')
 
             if source_id == "":
                 return Response({"status":"Error","message":"Source id can not empty."},status=HTTP_200_OK)
@@ -136,6 +139,7 @@ def source_update(request):
             source_detail.name=source_name
             source_detail.discription=source_description
             source_detail.image_url=source_image
+            source_detail.base_url = base_url
             source_detail.save()
             
           

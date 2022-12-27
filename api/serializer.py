@@ -111,7 +111,7 @@ class SourceDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SourceDetails
-        fields=("source_id","name","discription","image_url")
+        fields=("source_id","name","discription","image_url","base_url")
 
 
 class SourceServerDetailsSerializer(serializers.ModelSerializer):

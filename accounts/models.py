@@ -123,6 +123,7 @@ class SourceDetails(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     discription = models.TextField(null=True, blank=True)
     image_url = models.CharField(max_length=255, null=True, blank=True)
+    base_url =  models.CharField(max_length=255, null=True, blank=True,default="")
     is_active = models.BooleanField(default = True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
