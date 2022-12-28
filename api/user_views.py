@@ -198,3 +198,44 @@ def user_dashboard_delete(request):
     else:
         errormsg = "Bad Request"
         return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def user_dashboard_add_links(request):
+    if request.user.is_anonymous:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)
+    
+    if request.user.role.role_type == ROLE_USER:
+        try:
+            refresh_token(request.user)
+            user_filter = User.objects.filter(email=request.user.email,isDeleted=True).first()
+            if user_filter:
+                return Response(data={"status":"Error","message":"This account is not active."}, status=HTTP_200_OK)
+          
+            dashboard_id = request.data.get('dashboard_id')
+            links_details = request.data['links']
+            
+
+            if dashboard_id == "":
+                errormsg = "dashboard_id can not be empty."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
+
+            userdashboard = UserDashboardDetails.objects.filter(id=dashboard_id,user=request.user).first()
+            if userdashboard is None:
+                errormsg = "Dashboard can not be found."
+                return Response(data={"status":"Error","message":errormsg}, status=HTTP_200_OK)
+            
+            for link in links_details:
+                UserDashboardLinks.objects.create(
+                    link_name=link["linkName"],
+                    link_url= link["url"],
+                    dashboard=userdashboard,
+                )
+
+            return Response(data={"status":"Success","message":"dashboard links added successfully."}, status=HTTP_200_OK)
+        except Exception as e:
+            SaveLog(e)
+            return Response(data={"status":"Error","message":SERVER_ERROR}, status=HTTP_200_OK)
+    else:
+        errormsg = "Bad Request"
+        return Response(data={"status":"Error","message":errormsg}, status=HTTP_400_BAD_REQUEST)

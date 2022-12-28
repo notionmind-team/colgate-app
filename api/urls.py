@@ -30,5 +30,6 @@ urlpatterns = [
     path('user-dashboard-details',user_views.user_dashboard_details,name='user_dashboard_details'),
     path('user-dashboard-update',user_views.user_dashboard_update,name='user_dashboard_update'),
     path('user-dashboard-delete',user_views.user_dashboard_delete,name='user_dashboard_delete'),
+    path('user-dashboard-add-links',user_views.user_dashboard_add_links,name='user_dashboard_add_links'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

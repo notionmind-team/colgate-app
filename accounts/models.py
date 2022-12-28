@@ -197,3 +197,21 @@ class UserDashboardDetails(models.Model):
     class Meta:
         verbose_name = "UserDashboardDetails"
         verbose_name_plural = "UserDashboardDetails"
+
+
+class UserDashboardLinks(models.Model):
+    link_name = models.TextField(default="")
+    link_url = models.TextField(default="")
+    dashboard = models.ForeignKey(UserDashboardDetails,on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default = True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+
+    def __int__(self):
+        return self.id
+    def __str__(self):
+        return str(self.link_name)
+
+    class Meta:
+        verbose_name = "UserDashboardLinks"
+        verbose_name_plural = "UserDashboardLinks"

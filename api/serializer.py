@@ -144,13 +144,28 @@ class SourceServerDetailsSerializer(serializers.ModelSerializer):
 
 class UserDashboardDetailsSerializer(serializers.ModelSerializer):
     dashboard_id = serializers.SerializerMethodField(read_only=True)
+    link_details = serializers.SerializerMethodField(read_only=True)
 
     def get_dashboard_id(self,ins):
         if ins is None:
             return ""
 
         return str(ins.id)
+    
+    def get_link_details(self,ins):
+        res_data = []
+        if ins is None:
+            return res_data
+
+        link_list = UserDashboardLinks.objects.filter(is_active=True,dashboard=ins)
+        for link in link_list:
+            data = {}
+            data["linkName"] = link.link_name
+            data["url"] = link.link_url
+            res_data.append(data)
+        
+        return res_data
 
     class Meta:
         model = UserDashboardDetails
-        fields=("dashboard_id","name","image_url")
+        fields=("dashboard_id","name","image_url","link_details")
