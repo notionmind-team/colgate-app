@@ -102,12 +102,32 @@ class AdminSerializer(serializers.ModelSerializer):
 
 class SourceDetailsSerializer(serializers.ModelSerializer):
     source_id = serializers.SerializerMethodField(read_only=True)
+    image_url = serializers.SerializerMethodField(read_only=True)
+    base_url = serializers.SerializerMethodField(read_only=True)
 
     def get_source_id(self,ins):
         if ins is None:
             return ""
 
         return str(ins.id)
+
+    def get_image_url(self,ins):
+        if ins is None:
+            return ""
+        
+        if ins.image_url is None or ins.image_url == "":
+            return ""
+        
+        return ins.image_url
+
+    def get_base_url(self,ins):
+        if ins is None:
+            return ""
+        
+        if ins.base_url is None or ins.base_url == "":
+            return ""
+        
+        return ins.base_url
 
     class Meta:
         model = SourceDetails
@@ -145,12 +165,22 @@ class SourceServerDetailsSerializer(serializers.ModelSerializer):
 class UserDashboardDetailsSerializer(serializers.ModelSerializer):
     dashboard_id = serializers.SerializerMethodField(read_only=True)
     link_details = serializers.SerializerMethodField(read_only=True)
+    image_url = serializers.SerializerMethodField(read_only=True)
 
     def get_dashboard_id(self,ins):
         if ins is None:
             return ""
 
         return str(ins.id)
+
+    def get_image_url(self,ins):
+        if ins is None:
+            return ""
+        
+        if ins.image_url is None or ins.image_url == "":
+            return ""
+        
+        return ins.image_url
     
     def get_link_details(self,ins):
         res_data = []
